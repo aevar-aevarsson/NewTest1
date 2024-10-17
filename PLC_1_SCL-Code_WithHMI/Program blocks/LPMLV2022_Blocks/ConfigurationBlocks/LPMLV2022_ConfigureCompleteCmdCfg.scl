@@ -1,0 +1,52 @@
+﻿FUNCTION "LPMLV2022_ConfigureCompleteCmdCfg" : Void
+TITLE = LPMLV2022_ConfigureCompleteCmdCfg
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : APC_ERLF
+FAMILY : OMAC
+VERSION : 1.0
+//Support: tech.team.motioncontrol@siemens.com
+   VAR_INPUT 
+      Suspended : Bool;   // TRUE: The Complete control command is taken into account in state Suspended
+      Execute : Bool;   // TRUE: The Complete control command is taken into account in state Execute
+      Held : Bool;   // TRUE: The Complete control command is taken into account in state Held
+   END_VAR
+
+   VAR_OUTPUT 
+      completeCmdCfg : DWord;   // Complete control command configuration for all unit modes (one config. for all modes). Bit locations within the DWORD value represent State numbers
+   END_VAR
+
+
+BEGIN
+	REGION HEADER
+	  //================================================================================
+	  // SIEMENS AG
+	  // (c)Copyright 2023 All Rights Reserved
+	  //--------------------------------------------------------------------------------
+	  // Library: LPMLV2022
+	  // Tested with: S7-1211 with FW version V4.2, S7-1511-1 PN with FW version V2.6
+	  // Engineering: TIA Portal V15.1
+	  // Restrictions: -
+	  // Requirements: S7-1200 FW 4.2 / S7-1500 FW 2.6
+	  // Functionality: The function generates a DWord value which represents
+	  //                the state configuration for all unit modes.
+	  //                
+	  //                Note: All inputs must be set to comply with ANSI/ISA-TR88.00.02-2022
+	  //
+	  // Support: tech.team.motioncontrol@siemens.com
+	  // Note: Parameter comments are only available in language 'English (United States)'
+	  //--------------------------------------------------------------------------------
+	  // Change log table:
+	  // Version  Date        Expert in charge  Changes applied
+	  // 01.00.00 28.02.2023  KT                First released version
+	  //================================================================================
+	END_REGION
+	
+	// Initialize states configuration
+	#completeCmdCfg := 16#0000_0000;
+	
+	// Set states configuration
+	#completeCmdCfg.%X5  := #Suspended;
+	#completeCmdCfg.%X6  := #Execute;
+	#completeCmdCfg.%X11 := #Held;
+END_FUNCTION
+

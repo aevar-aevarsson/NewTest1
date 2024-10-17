@@ -1,0 +1,56 @@
+﻿FUNCTION_BLOCK "ShowUnitModeStateManagerDiagnosticsInHMI"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      tempDiagnosticsBufferIndexForHMI : Int;
+      tempActualBufferIndex : Int;
+   END_VAR
+
+
+BEGIN
+	REGION HEADER
+	  //================================================================================
+	  // SIEMENS AG
+	  // (c)Copyright 2023 All Rights Reserved
+	  //--------------------------------------------------------------------------------
+	  // Library: -
+	  // Tested with: S7-1513-1 PN with FW version V2.9
+	  // Engineering: TIA Portal V17 Update 4
+	  // Restrictions: -
+	  // Requirements: LPMLV2022
+	  // Functionality: Copies one element of diagnostics buffer for easier HMI access
+	  // Support: tech.team.motioncontrol@siemens.com
+	  // Note: Parameter comments are only available in language 'English (United States)'
+	  //--------------------------------------------------------------------------------
+	  // Change log table:
+	  // Version  Date        Expert in charge  Changes applied
+	  // 01.00.00 28.02.2023  KT                First released version
+	  //================================================================================
+	END_REGION
+	
+	// Create process image and verify the value for the index for selecting the diagnostics buffer entry to be displayed on the HMI
+	#tempDiagnosticsBufferIndexForHMI := "UnitModeStateManagerDiagnosticsForHMI".diagnosticsBufferIndexForHMI;
+	IF (#tempDiagnosticsBufferIndexForHMI < 0) THEN
+	  #tempDiagnosticsBufferIndexForHMI := "LPMLV2022_DIAG_BUFFER_UPPER_LIM";
+	  
+	ELSIF (#tempDiagnosticsBufferIndexForHMI > "LPMLV2022_DIAG_BUFFER_UPPER_LIM") THEN
+	  #tempDiagnosticsBufferIndexForHMI := 0;
+	END_IF;
+	
+	// Copy the needed array element for HMI
+	"UnitModeStateManagerDiagnosticsForHMI".diagnosticsBufferEntryForHMI := "InstLPMLV2022_UnitModeStateManager".diagnostics.buffer[#tempDiagnosticsBufferIndexForHMI];
+	"UnitModeStateManagerDiagnosticsForHMI".diagnosticsBufferIndexForHMI := #tempDiagnosticsBufferIndexForHMI;
+	
+	// Provide actual diagnostics buffer index for HMI
+	#tempActualBufferIndex := "InstLPMLV2022_UnitModeStateManager".diagnostics.bufferIndex;
+	"UnitModeStateManagerDiagnosticsForHMI".actualDiagnosticsBufferIndex := #tempActualBufferIndex;
+	
+	// Provide actual diagnostics message for the HMI
+	IF (#tempActualBufferIndex < 0) OR (#tempActualBufferIndex > "LPMLV2022_DIAG_BUFFER_UPPER_LIM") THEN // tempActualBufferIndex is invalid
+	  "UnitModeStateManagerDiagnosticsForHMI".messageCurrentPLCIndex := 16#00;
+	  
+	ELSE // tempActualBufferIndex is valid, show corresponding message
+	  "UnitModeStateManagerDiagnosticsForHMI".messageCurrentPLCIndex := "InstLPMLV2022_UnitModeStateManager".diagnostics.buffer[#tempActualBufferIndex].message;
+	END_IF;
+END_FUNCTION_BLOCK
+

@@ -1,0 +1,702 @@
+﻿FUNCTION_BLOCK "CallUnitModeStateManager"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      Initial_Call { ExternalAccessible := 'False'; ExternalVisible := 'False'; ExternalWritable := 'False'} : Bool;   // Initial call flag from the calling OB
+   END_VAR
+
+
+BEGIN
+	REGION HEADER
+	  //================================================================================
+	  // SIEMENS AG
+	  // (c)Copyright 2023 All Rights Reserved
+	  //--------------------------------------------------------------------------------
+	  // Library: -
+	  // Tested with: S7-1513-1 PN with FW version V2.9
+	  // Engineering: TIA Portal V17 Update 4
+	  // Restrictions: -
+	  // Requirements: LPMLV2022
+	  // Functionality: Example of calling LPMLV2022_UnitModeStateManager incl. ToDo structure
+	  // Support: tech.team.motioncontrol@siemens.com
+	  // Note: Parameter comments are only available in language 'English (United States)'
+	  //--------------------------------------------------------------------------------
+	  // Change log table:
+	  // Version  Date        Expert in charge  Changes applied
+	  // 01.00.00 28.02.2023  KT                First released version
+	  //================================================================================
+	END_REGION
+	
+	// Disable unit modes and set state configuration in modes - default: Base state model
+	IF #Initial_Call THEN
+	  
+	  // Enable the needed unit modes
+	  "LPMLV2022_ConfigureEnabledModesCfg"(ProductionMode := TRUE,
+	                                       MaintenanceMode := TRUE,
+	                                       UserMode01 := TRUE,
+	                                       UserMode02 := FALSE,
+	                                       UserMode03 := FALSE,
+	                                       UserMode04 := FALSE,
+	                                       UserMode05 := FALSE,
+	                                       UserMode06 := FALSE,
+	                                       UserMode07 := FALSE,
+	                                       UserMode08 := FALSE,
+	                                       UserMode09 := FALSE,
+	                                       UserMode10 := FALSE,
+	                                       UserMode11 := FALSE,
+	                                       UserMode12 := FALSE,
+	                                       UserMode13 := FALSE,
+	                                       UserMode14 := FALSE,
+	                                       UserMode15 := FALSE,
+	                                       UserMode16 := FALSE,
+	                                       UserMode17 := FALSE,
+	                                       UserMode18 := FALSE,
+	                                       UserMode19 := FALSE,
+	                                       UserMode20 := FALSE,
+	                                       UserMode21 := FALSE,
+	                                       UserMode22 := FALSE,
+	                                       UserMode23 := FALSE,
+	                                       UserMode24 := FALSE,
+	                                       UserMode25 := FALSE,
+	                                       UserMode26 := FALSE,
+	                                       UserMode27 := FALSE,
+	                                       UserMode28 := FALSE,
+	                                       EnabledModesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.EnabledModesCfg);
+	  
+	  // Set state configuration for every unit mode
+	  // Mode: Production
+	  "LPMLV2022_ConfigureDisabledStatesCfg"(Clearing := FALSE,
+	                                         Starting := FALSE,
+	                                         Suspended := FALSE,
+	                                         Stopping := FALSE,
+	                                         Aborting := FALSE,
+	                                         Holding := FALSE,
+	                                         Held := FALSE,
+	                                         Unholding := FALSE,
+	                                         Suspending := FALSE,
+	                                         Unsuspending := FALSE,
+	                                         Resetting := FALSE,
+	                                         Completing := FALSE,
+	                                         Completed := FALSE,
+	                                         DisabledStatesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_PRODUCTION"]);
+	  
+	  // Mode: Maintenance
+	  "LPMLV2022_ConfigureDisabledStatesCfg"(Clearing := FALSE,
+	                                         Starting := FALSE,
+	                                         Suspended := TRUE,
+	                                         Stopping := FALSE,
+	                                         Aborting := FALSE,
+	                                         Holding := FALSE,
+	                                         Held := FALSE,
+	                                         Unholding := FALSE,
+	                                         Suspending := TRUE,
+	                                         Unsuspending := TRUE,
+	                                         Resetting := FALSE,
+	                                         Completing := FALSE,
+	                                         Completed := FALSE,
+	                                         DisabledStatesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_MAINTENANCE"]);
+	  
+	  // Mode: Manual
+	  "LPMLV2022_ConfigureDisabledStatesCfg"(Clearing := FALSE,
+	                                         Starting := FALSE,
+	                                         Suspended := TRUE,
+	                                         Stopping := FALSE,
+	                                         Aborting := FALSE,
+	                                         Holding := TRUE,
+	                                         Held := TRUE,
+	                                         Unholding := TRUE,
+	                                         Suspending := TRUE,
+	                                         Unsuspending := TRUE,
+	                                         Resetting := FALSE,
+	                                         Completing := TRUE,
+	                                         Completed := TRUE,
+	                                         DisabledStatesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_MANUAL"]);
+	  
+	  // Mode: UserMode01
+	  "LPMLV2022_ConfigureDisabledStatesCfg"(Clearing := FALSE,
+	                                         Starting := FALSE,
+	                                         Suspended := TRUE,
+	                                         Stopping := FALSE,
+	                                         Aborting := FALSE,
+	                                         Holding := FALSE,
+	                                         Held := FALSE,
+	                                         Unholding := FALSE,
+	                                         Suspending := TRUE,
+	                                         Unsuspending := TRUE,
+	                                         Resetting := FALSE,
+	                                         Completing := FALSE,
+	                                         Completed := FALSE,
+	                                         DisabledStatesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_USER_01"]);
+	  
+	  // Mode: UserMode02
+	  // "LPMLV2022_ConfigureDisabledStatesCfg"(Clearing := FALSE,
+	  //                                        Starting := FALSE,
+	  //                                        Suspended := FALSE,
+	  //                                        Stopping := FALSE,
+	  //                                        Aborting := FALSE,
+	  //                                        Holding := FALSE,
+	  //                                        Held := FALSE,
+	  //                                        Unholding := FALSE,
+	  //                                        Suspending := FALSE,
+	  //                                        Unsuspending := FALSE,
+	  //                                        Resetting := FALSE,
+	  //                                        Completing := FALSE,
+	  //                                        Completed := FALSE,
+	  //                                        DisabledStatesCfg => "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_USER_02"]);
+	  
+	  RETURN; // Nothing else in this cycle to avoid runtime peaks
+	END_IF;
+	
+	// Call of LPMLV2022_UnitModeStateManager
+	// Note: the inputs UnitMode, CntrlCmd, ... are set via the PackTags command tags (see FB PACKMLV2022_PackTagsGlueCode)
+	//       the input SC is normally set in the program when the action of an acting state is done, for testing purposes it can be set in the example HMI
+	"InstLPMLV2022_UnitModeStateManager"();
+	
+	// Reset the state complete signal (SC)
+	"InstLPMLV2022_UnitModeStateManager".SC := FALSE;
+	
+	// Functional implementation for all unit modes and states
+	CASE "InstLPMLV2022_UnitModeStateManager".UnitModeCurrent OF
+	  "LPMLV2022_MODE_PRODUCTION":
+	    CASE "InstLPMLV2022_UnitModeStateManager".StateCurrent OF
+	      "LPMLV2022_STATE_RESETTING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // This state is the result of a Reset command from the Stopped or
+	        // Completed state. Faults and stop causes are reset. Resetting will
+	        // typically cause safety devices to be energized and place the machine in
+	        // the Idle state where it will wait for a Start command. No hazardous
+	        // motion should happen in this state.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_IDLE":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // This is the state that indicates that Resetting is complete.
+	        // The machine will maintain the conditions that were achieved
+	        // during the Resetting state, and perform operations required when the
+	        // machine is in Idle.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STARTING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // The machine completes the steps needed to start. This state is entered
+	        // as a result of a Start command (local or remote). When Starting completes,
+	        // the machine will transition to the Execute state.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_EXECUTE":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // Once the machine is processing materials it is in the Execute state
+	        // until a transition command is received. Different machine modes
+	        // will result in specific types of Execute activities.
+	        // For example, if the machine is in the “Production” mode, the Execute will
+	        // result in products being produced, while perhaps in a user-defined “Clean Out” mode
+	        // the Execute state would result in the action of cleaning the machine.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STOPPING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // This state is entered in response to a Stop command.
+	        // While in this state the machine executes the logic that brings it to a
+	        // controlled stop as reflected by the Stopped state. Normal Starting
+	        // of the machine cannot be initiated unless Resetting has taken place.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_STOPPED":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // The machine is powered and stationary after completing the Stopping state.
+	        // All communications with other systems are functioning (if applicable).
+	        // A Reset command will cause a transition from Stopped to the Resetting state.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_HOLDING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // This state is used when internal (inside this unit/machine and
+	        // not from another machine on the production line) machine conditions do
+	        // not allow the machine to continue producing, that is, the machine leaves
+	        // the Execute or Suspended states due to internal conditions.
+	        // This is typically used for routine machine conditions that require minor
+	        // operator servicing to continue production. This state can be initiated
+	        // automatically or by an operator and can be easily recovered from.
+	        // An example of this would be a machine that requires an operator to
+	        // periodically refill a glue dispenser or carton magazine and due to the
+	        // machine design, these operations cannot be performed while the machine
+	        // is running. Since these types of tasks are normal production operations,
+	        // it is not desirable to go through aborting or stopping sequences, and
+	        // because these functions are integral to the machine they are not
+	        // considered to be “external”. While in the Holding state, the machine is
+	        // typically brought to a controlled stop and then transitions to Held upon
+	        // state complete. To be able to restart production correctly after the
+	        // Held state, all relevant process set points and return status of the
+	        // procedures at the time of receiving the Hold command must be saved in
+	        // the machine controller when executing the Holding procedure.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done            
+	        
+	      "LPMLV2022_STATE_HELD":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // Refer to Holding for when this state is used. In this state the machine
+	        // does not produce product. It will either stop running or continue to dry
+	        // cycle. A transition to the Unholding state will occur when internal
+	        // machine conditions change or an Unhold command is initiated by an operator.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNHOLDING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // Refer to Holding for when this state is used. A machine will typically
+	        // enter into Unholding automatically when internal conditions,
+	        // material levels, for example, return to an acceptable level. If an operator
+	        // is required to perform minor servicing to replenish materials or make
+	        // adjustments, then the Unhold command may be initiated by the operator.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done   
+	        
+	      "LPMLV2022_STATE_SUSPENDING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // This state is used when external (outside this unit/machine but
+	        // usually on the same integrated production line) process conditions do not
+	        // allow the machine to continue producing, that is, the machine leaves
+	        // Execute due to upstream or downstream conditions on the line. This is
+	        // typically due to a Blocked or Starved event. This condition may be
+	        // detected by a local machine sensor or based on a supervisory system
+	        // external command. While in the Suspending state, the machine is
+	        // typically brought to a controlled stop and then transitions to
+	        // Suspended upon state complete. To be able to restart production
+	        // correctly after the Suspended state, all relevant process set points and
+	        // return status of the procedures at the time of receiving the Suspend
+	        // command must be saved in the machine controller when executing the
+	        // Suspending procedure.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_SUSPENDED":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // Refer to Suspending for when this state is used. In this state the
+	        // machine does produce product. It will either stop running or continue
+	        // to cycle without producing until external process conditions return to
+	        // normal, at which time, the Suspended state will transition to the
+	        // Unsuspending state, typically without any operator intervention.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNSUSPENDING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // Refer to Suspending for when this state is used. This state is a result
+	        // of process conditions returning to normal. The Unsuspending state
+	        // initiates any required actions or sequences necessary to transition the
+	        // machine from Suspended back to Execute. To be able to restart
+	        // production correctly after the Suspended state, all relevant process
+	        // set points and return status of the procedures at the time of receiving the
+	        // Suspend command must be saved in the machine controller when
+	        // executing the Suspending procedure.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETING":
+	        //-------------------------------------------
+	        // State Type: Acting
+	        // This state is the result of a Complete command from the Execute, Held
+	        // or Suspended states. The Complete command may be internally generated,
+	        // such as reaching the end of a predefined production count where normal
+	        // operation has run to completion, or externally generated, such as by a
+	        // supervisory system. The Completing state is often used to end a
+	        // production run and summarize production data.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETED":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // The machine has finished the Completing state and is now waiting for
+	        // a Reset command before transitioning to the Resetting state.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_ABORTING":
+	        //-------------------------------------------
+	        // State type: Acting
+	        // The Aborting state can be entered at any time in response to the Abort command,
+	        // typically triggered by the occurrence of a machine event that warrants an aborting action.
+	        // The aborting logic will bring the machine to a rapid safe stop.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_ABORTED":
+	        //-------------------------------------------
+	        // State Type: Wait
+	        // The machine maintains status information relevant to the abort condition.
+	        // The machine can only exit the Aborted state after an explicit Clear command,
+	        // subsequent to manual intervention to correct and reset the
+	        // detected machine faults.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_CLEARING":
+	        //------------------------------------------
+	        // State Type: Acting
+	        // Initiated by a Clear command to clear faults that may have occurred and
+	        // are present in the Aborted state before proceeding to a Stopped state.
+	        //-------------------------------------------
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      ELSE
+	        // Error reaction
+	        ; // todo
+	    END_CASE;
+	    
+	  "LPMLV2022_MODE_MAINTENANCE":
+	    CASE "InstLPMLV2022_UnitModeStateManager".StateCurrent OF
+	      "LPMLV2022_STATE_RESETTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_IDLE":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STARTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_EXECUTE":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STOPPING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_STOPPED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_HOLDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done            
+	        
+	      "LPMLV2022_STATE_HELD":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNHOLDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done   
+	        
+	      "LPMLV2022_STATE_SUSPENDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_SUSPENDED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNSUSPENDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_ABORTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_ABORTED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_CLEARING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      ELSE
+	        // Error reaction
+	        ; // todo
+	    END_CASE;
+	  
+	  "LPMLV2022_MODE_MANUAL":
+	    CASE "InstLPMLV2022_UnitModeStateManager".StateCurrent OF
+	    "LPMLV2022_STATE_RESETTING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_IDLE":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_STARTING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_EXECUTE":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_STOPPING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_STOPPED":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_HOLDING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done            
+	      
+	    "LPMLV2022_STATE_HELD":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_UNHOLDING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done   
+	      
+	    "LPMLV2022_STATE_SUSPENDING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_SUSPENDED":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_UNSUSPENDING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_COMPLETING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_COMPLETED":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_ABORTING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    "LPMLV2022_STATE_ABORTED":
+	      ; // todo
+	      
+	    "LPMLV2022_STATE_CLEARING":
+	      ; // todo
+	      
+	      // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	      
+	    ELSE
+	      // Error reaction
+	      ; // todo
+	  END_CASE;
+	  
+	  "LPMLV2022_MODE_USER_01":
+	    CASE "InstLPMLV2022_UnitModeStateManager".StateCurrent OF
+	      "LPMLV2022_STATE_RESETTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_IDLE":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STARTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_EXECUTE":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_STOPPING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_STOPPED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_HOLDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done            
+	        
+	      "LPMLV2022_STATE_HELD":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNHOLDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done   
+	        
+	      "LPMLV2022_STATE_SUSPENDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_SUSPENDED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_UNSUSPENDING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_COMPLETED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_ABORTING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      "LPMLV2022_STATE_ABORTED":
+	        ; // todo
+	        
+	      "LPMLV2022_STATE_CLEARING":
+	        ; // todo
+	        
+	        // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	        
+	      ELSE
+	        // Error reaction
+	        ; // todo
+	    END_CASE;
+	  
+	  // "LPMLV2022_MODE_USER_02":
+	  //   CASE "InstLPMLV2022_UnitModeStateManager".StateCurrent OF
+	  //     "LPMLV2022_STATE_RESETTING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_IDLE":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_STARTING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_EXECUTE":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_STOPPING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_STOPPED":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_HOLDING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done            
+	  
+	  //     "LPMLV2022_STATE_HELD":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_UNHOLDING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done   
+	  
+	  //     "LPMLV2022_STATE_SUSPENDING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_SUSPENDED":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_UNSUSPENDING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_COMPLETING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_COMPLETED":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_ABORTING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     "LPMLV2022_STATE_ABORTED":
+	  //       ; // todo
+	  
+	  //     "LPMLV2022_STATE_CLEARING":
+	  //       ; // todo
+	  
+	  //       // "InstLPMLV2022_UnitModeStateManager".SC := TRUE; // Set state complete signal when action is done
+	  
+	  //     ELSE
+	  //       // Error reaction
+	  //       ; // todo
+	  //   END_CASE;
+	
+	ELSE
+	  // Error reaction
+	  ; // todo
+	END_CASE;
+END_FUNCTION_BLOCK
+

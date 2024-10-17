@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V17" />
+  <DocumentInfo>
+    <Created>2024-10-17T14:16:17.0939194Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P, G115D</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Advanced / Unified PC</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Types.PlcStruct ID="0">
+    <AttributeList>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="None">
+    <Member Name="UnitMode" Datatype="DInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Unit Mode Target (0: Invalid, 1: Production, 2: Maintenance, 3: Manual, 04 - 31: User Definable). Minimum required for supervisory control</MultiLanguageText></Comment></Member>
+    <Member Name="UnitModeChangeRequest" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Request Unit Mode Change to Unit Mode Target. Minimum required for supervisory control</MultiLanguageText></Comment></Member>
+    <Member Name="MachSpeed" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Current Machine Speed Setpoint; Unit of Measure: Primary Packages/Minute. Minimum required for supervisory control</MultiLanguageText></Comment></Member>
+    <Member Name="MaterialInterlock" Datatype="DWord"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Materials Ready. It is comprised of a series of bits with 1 equaling ready or not low, 0 equaling not ready, or low. Each bit represents a different user material. Unused bits should be forced to a value of 1 or TRUE</MultiLanguageText></Comment></Member>
+    <Member Name="CntrlCmd" Datatype="DInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Control Command (0: Undefined, 1: Reset, 2: Start, 3: Stop, 4: Hold, 5: UnHold, 6: Suspend, 7: UnSuspend, 8: Abort, 9: Clear, 10: Complete). Minimum required for supervisory control</MultiLanguageText></Comment></Member>
+    <Member Name="CmdChangeRequest" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">State Change Request. This CmdChangeRequest bit will command the machine to proceed to change the state to the target state. Minimum required for supervisory control</MultiLanguageText></Comment></Member>
+    <Member Name="Parameter_REAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PARAMETER_REAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_REAL&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Unit/Machine Parameter information for values with REAL data type</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Real" /></Section></Sections></Member>
+    <Member Name="Parameter_STRING" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PARAMETER_STRING_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_STRING&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Unit/Machine Parameter information for values with STRING data type</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="String[80]" /></Section></Sections></Member>
+    <Member Name="Parameter_LREAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PARAMETER_LREAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_LREAL&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Unit/Machine Parameter information for values with LREAL data type</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="LReal" /></Section></Sections></Member>
+    <Member Name="Parameter_DINT" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PARAMETER_DINT_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_DINT&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Unit/Machine Parameter information for values with DINT data type</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="DInt" /></Section></Sections></Member>
+    <Member Name="Parameter_BOOL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PARAMETER_BOOL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_BOOL&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Unit/Machine Parameter information for values with BOOL data type</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Bool" /></Section></Sections></Member>
+    <Member Name="SelectedRecipe" Datatype="DInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Recipe Selection. This tag is used to designate which recipe should be run on the machine to produce the primary output product, according to a user-design recipe handling procedure. It is designed to correspond directly to the listing in the Recipe Array</MultiLanguageText></Comment></Member>
+    <Member Name="RecipeChangeRequest" Datatype="Bool"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Recipe change request. This tag is used to trigger a user-defined recipe changeover process that will configure the machine to produce the primary product designated in Command.SelectedRecipe</MultiLanguageText></Comment></Member>
+    <Member Name="Recipe" Datatype="Array[0..&quot;LPMLV2022_COMMAND_RECIPE_UPPER_LIM&quot;] of &quot;LPMLV2022_typeCommandRecipe&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Structured Array of Recipe Information. The recipe data type can be used for defining product ingredient and product processing parameter variables</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="PrimaryQty" Datatype="Real" /><Member Name="ProcessVariables" Datatype="&quot;LPMLV2022_typeCommandProcessVariables&quot;"><Sections><Section Name="None"><Member Name="Parameter_REAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PROCESS_VARIABLES_PARAMETER_REAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_REAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Real" /></Section></Sections></Member><Member Name="Parameter_STRING" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PROCESS_VARIABLES_PARAMETER_STRING_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_STRING&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="String[80]" /></Section></Sections></Member><Member Name="Parameter_LREAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PROCESS_VARIABLES_PARAMETER_LREAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_LREAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="LReal" /></Section></Sections></Member><Member Name="Parameter_DINT" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PROCESS_VARIABLES_PARAMETER_DINT_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_DINT&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="DInt" /></Section></Sections></Member><Member Name="Parameter_BOOL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_PROCESS_VARIABLES_PARAMETER_BOOL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_BOOL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member><Member Name="Ingredients" Datatype="&quot;LPMLV2022_typeCommandIngredients&quot;"><Sections><Section Name="None"><Member Name="Parameter_REAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_INGREDIENTS_PARAMETER_REAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_REAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Real" /></Section></Sections></Member><Member Name="Parameter_STRING" Datatype="Array[0..&quot;LPMLV2022_COMMAND_INGREDIENTS_PARAMETER_STRING_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_STRING&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="String[80]" /></Section></Sections></Member><Member Name="Parameter_LREAL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_INGREDIENTS_PARAMETER_LREAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_LREAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="LReal" /></Section></Sections></Member><Member Name="Parameter_DINT" Datatype="Array[0..&quot;LPMLV2022_COMMAND_INGREDIENTS_PARAMETER_DINT_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_DINT&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="DInt" /></Section></Sections></Member><Member Name="Parameter_BOOL" Datatype="Array[0..&quot;LPMLV2022_COMMAND_INGREDIENTS_PARAMETER_BOOL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_BOOL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member></Section></Sections></Member>
+  </Section>
+</Sections></Interface>
+      <IsFailsafeCompliant>false</IsFailsafeCompliant>
+      <Name>LPMLV2022_typeCommand</Name>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Support: tech.team.motioncontrol@siemens.com</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="3" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>LPMLV2022_typeCommand</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Types.PlcStruct>
+</Document>

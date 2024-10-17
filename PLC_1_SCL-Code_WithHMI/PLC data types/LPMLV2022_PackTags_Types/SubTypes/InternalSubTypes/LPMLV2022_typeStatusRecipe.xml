@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V17" />
+  <DocumentInfo>
+    <Created>2024-10-17T14:16:18.6143819Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>SINAMICS Startdrive Advanced</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G130, G150, S120, S150, SINAMICS MV, S210</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>SINAMICS Startdrive G110M, G120, G120C, G120D, G120P, G115D</DisplayName>
+        <DisplayVersion>V17 Update2</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V17</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Advanced / Unified PC</DisplayName>
+        <DisplayVersion>V17 Update 4</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Types.PlcStruct ID="0">
+    <AttributeList>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+  <Section Name="None">
+    <Member Name="ID" Datatype="DInt"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">ID Value of the Recipe. The ID is used to indicate to the machine which recipe is being produced</MultiLanguageText></Comment></Member>
+    <Member Name="Name" Datatype="String[80]"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Name of Recipe. The Recipe Name is used to further identify the product being produced, especially when alphanumeric characters are used (i.e. SKU or UPC)</MultiLanguageText></Comment></Member>
+    <Member Name="Unit" Datatype="String[6]"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Unit of Measure of Recipe. The Recipe Unit is used to describe the unit of production for the product being produced</MultiLanguageText></Comment></Member>
+    <Member Name="PrimaryQty" Datatype="Real"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Primary Quantity Value of Recipe. PrimaryQty is used to provide a common reference for manufacturing throughput across all the machines on a production line. This element describes the number of Primary Products per recipe Unit for the product being produced by this unit/machine</MultiLanguageText></Comment></Member>
+    <Member Name="ProcessVariables" Datatype="&quot;LPMLV2022_typeStatusProcessVariables&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Process Variables for each Recipe. The ProcessVariables structure can be used to reflect and confirm particular set points needed by the unit/machine for the processing of a specific recipe or to report production statistics</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="Parameter_REAL" Datatype="Array[0..&quot;LPMLV2022_STATUS_PROCESS_VARIABLES_PARAMETER_REAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_REAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Real" /></Section></Sections></Member><Member Name="Parameter_STRING" Datatype="Array[0..&quot;LPMLV2022_STATUS_PROCESS_VARIABLES_PARAMETER_STRING_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_STRING&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="String[80]" /></Section></Sections></Member><Member Name="Parameter_LREAL" Datatype="Array[0..&quot;LPMLV2022_STATUS_PROCESS_VARIABLES_PARAMETER_LREAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_LREAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="LReal" /></Section></Sections></Member><Member Name="Parameter_DINT" Datatype="Array[0..&quot;LPMLV2022_STATUS_PROCESS_VARIABLES_PARAMETER_DINT_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_DINT&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="DInt" /></Section></Sections></Member><Member Name="Parameter_BOOL" Datatype="Array[0..&quot;LPMLV2022_STATUS_PROCESS_VARIABLES_PARAMETER_BOOL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_BOOL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member>
+    <Member Name="Ingredients" Datatype="&quot;LPMLV2022_typeStatusIngredients&quot;"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">false</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Comment><MultiLanguageText Lang="en-US">Ingredient Information for each Recipe. The Ingredients structure can be used to hold information for the raw materials that are used by the unit/machine in the processing of a particular product or recipe. Each element in one of the parameter arrays is considered to be an ingredient</MultiLanguageText></Comment><Sections><Section Name="None"><Member Name="Parameter_REAL" Datatype="Array[0..&quot;LPMLV2022_STATUS_INGREDIENTS_PARAMETER_REAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_REAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Real" /></Section></Sections></Member><Member Name="Parameter_STRING" Datatype="Array[0..&quot;LPMLV2022_STATUS_INGREDIENTS_PARAMETER_STRING_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_STRING&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="String[80]" /></Section></Sections></Member><Member Name="Parameter_LREAL" Datatype="Array[0..&quot;LPMLV2022_STATUS_INGREDIENTS_PARAMETER_LREAL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_LREAL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="LReal" /></Section></Sections></Member><Member Name="Parameter_DINT" Datatype="Array[0..&quot;LPMLV2022_STATUS_INGREDIENTS_PARAMETER_DINT_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_DINT&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="DInt" /></Section></Sections></Member><Member Name="Parameter_BOOL" Datatype="Array[0..&quot;LPMLV2022_STATUS_INGREDIENTS_PARAMETER_BOOL_UPPER_LIM&quot;] of &quot;LPMLV2022_typeParameter_BOOL&quot;"><Sections><Section Name="None"><Member Name="ID" Datatype="DInt" /><Member Name="Name" Datatype="String[80]" /><Member Name="Unit" Datatype="String[6]" /><Member Name="Value" Datatype="Bool" /></Section></Sections></Member></Section></Sections></Member>
+  </Section>
+</Sections></Interface>
+      <IsFailsafeCompliant>false</IsFailsafeCompliant>
+      <Name>LPMLV2022_typeStatusRecipe</Name>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Support: tech.team.motioncontrol@siemens.com</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="3" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>LPMLV2022_typeStatusRecipe</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Types.PlcStruct>
+</Document>

@@ -1,0 +1,178 @@
+﻿FUNCTION_BLOCK "LPMLV2022_Stacklight"
+TITLE = LPMLV2022_Stacklight
+{ S7_Optimized_Access := 'TRUE' }
+AUTHOR : APC_ERLF
+FAMILY : OMAC
+VERSION : 1.0
+//Support: tech.team.motioncontrol@siemens.com
+   VAR_INPUT 
+      StateCurrent : DInt := "LPMLV2022_STATE_UNDEFINED";   // Current state
+      starvedUpstream : Bool;   // TRUE: upstream system is not able to supply products
+      blockedDownstream : Bool;   // TRUE: downstream system is not able to accept products
+      materialLow : Bool;   // TRUE: low material
+      materialExhausted : Bool;   // TRUE: material exhausted
+   END_VAR
+
+   VAR_OUTPUT 
+      Stacklight { ExternalWritable := 'False'} : DWord;   // Indicator for the current stacklight status -> PackTags
+      redSolid { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 0
+      redFlashing { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 1
+      amberSolid { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 2
+      amberFlashing { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 3
+      blueSolid { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 4
+      blueFlashing { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 5
+      greenSolid { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 6
+      greenFlashing { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 7
+      hornFlashing { ExternalWritable := 'False'} : Bool;   // Status of stacklight bit 9
+   END_VAR
+
+   VAR_TEMP 
+      tempRedSolid : Bool;   // Status of stacklight bit 0
+      tempRedFlashing : Bool;   // Status of stacklight bit 1
+      tempAmberSolid : Bool;   // Status of stacklight bit 2
+      tempAmberFlashing : Bool;   // Status of stacklight bit 3
+      tempBlueSolid : Bool;   // Status of stacklight bit 4
+      tempBlueFlashing : Bool;   // Status of stacklight bit 5
+      tempGreenSolid : Bool;   // Status of stacklight bit 6
+      tempGreenFlashing : Bool;   // Status of stacklight bit 7
+      tempHornFlashing : Bool;   // Status of stacklight bit 9
+   END_VAR
+
+
+BEGIN
+	REGION HEADER
+	  //================================================================================
+	  // SIEMENS AG
+	  // (c)Copyright 2023 All Rights Reserved
+	  //--------------------------------------------------------------------------------
+	  // Library: LPMLV2022
+	  // Tested with: S7-1211 with FW version V4.2, S7-1511-1 PN with FW version V2.6
+	  // Engineering: TIA Portal V15.1
+	  // Restrictions: -
+	  // Requirements: S7-1200 FW 4.2 / S7-1500 FW 2.6
+	  // Functionality: Stacklight status according to ANSI/ISA-TR88.00.02-2022
+	  // Support: tech.team.motioncontrol@siemens.com
+	  // Note: Parameter comments are only available in language 'English (United States)'
+	  //--------------------------------------------------------------------------------
+	  // Change log table:
+	  // Version  Date        Expert in charge  Changes applied
+	  // 01.00.00 28.02.2023  KT                First released version
+	  //================================================================================
+	END_REGION
+	
+	// Example of how the stacklight can be made to correspond to certain machine conditions and PackML States
+	
+	//                    |Aborting |Clearing | Aborted |Completed| Stopped |Stopping |Resetting|  Idle   |Starting |Execute  | Comple- | Holding |Held (No |Unholding| Suspen- |Suspended|Unsuspen-|                    
+	//                    |         |         |         |         |         |         |         |         |         |         |  ting   |         |Product.)|         |  ding   |         |  ding   |                    
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Abnormal Stop      |    F    |    F    |    F    |         |         |         |         |         |         |         |         |         |         |         |         |         |         | Red Lamp Flashing  
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Controlled Stop    |         |         |         |    S    |    S    |    S    |    S    |         |         |         |         |         |         |         |         |         |         | Red Lamp Solid     
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Starved Upstream   |         |         |         |         |         |         |         |         |         |         |         |         |         |         |    F    |    F    |         | Amber Lamp Flashing
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Blocked Downstream |         |         |         |         |         |         |         |         |         |         |         |         |         |         |    S    |    S    |         | Amber Lamp Solid   
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Low Material       |    F    |    F    |    F    |    F    |    F    |    F    |    F    |    F    |    F    |    F    |    F    |         |         |    F    |    F    |    F    |    F    | Blue Lamp Flashing 
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Material Exhausted |         |         |         |         |         |         |         |         |         |         |         |    S    |    S    |         |         |         |         | Blue Lamp Solid    
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Ready to Start     |         |         |         |         |         |         |         |    F    |         |         |         |         |         |         |         |         |         | Green Lamp Flashing
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Running            |         |         |         |         |         |         |         |         |    S    |    S    |    S    |         |         |    S    |         |         |    S    | Green Lamp Solid   
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	// Starting/Restarting|         |         |         |         |         |         |         |         |    F    |         |         |         |         |    F    |         |         |    F    | Horn               
+	//--------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------------
+	
+	// The temporary variables are automatically set to FALSE, because the "Optimized block access" attribute is set
+	
+	CASE #StateCurrent OF
+	  "LPMLV2022_STATE_EXECUTE":
+	    #tempBlueFlashing := #materialLow;
+	    #tempGreenSolid   := TRUE;
+	    
+	  "LPMLV2022_STATE_COMPLETING":
+	    #tempBlueFlashing := #materialLow;
+	    #tempGreenSolid   := TRUE;
+	    
+	  "LPMLV2022_STATE_COMPLETED":
+	    #tempRedSolid     := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_RESETTING":
+	    #tempRedSolid := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_IDLE":
+	    #tempBlueFlashing  := #materialLow;
+	    #tempGreenFlashing := TRUE;
+	    
+	  "LPMLV2022_STATE_STARTING":
+	    #tempBlueFlashing := #materialLow;
+	    #tempGreenSolid   := TRUE;
+	    #tempHornFlashing := TRUE;
+	    
+	  "LPMLV2022_STATE_UNHOLDING":
+	    #tempBlueFlashing := #materialLow;
+	    #tempGreenSolid   := TRUE;
+	    #tempHornFlashing := TRUE;
+	    
+	  "LPMLV2022_STATE_UNSUSPENDING":
+	    #tempBlueFlashing := #materialLow;
+	    #tempGreenSolid   := TRUE;
+	    #tempHornFlashing := TRUE;
+	    
+	  "LPMLV2022_STATE_HOLDING":
+	    #tempBlueSolid := #materialExhausted;
+	    
+	  "LPMLV2022_STATE_HELD":
+	    #tempBlueSolid := #materialExhausted;
+	    
+	  "LPMLV2022_STATE_SUSPENDING":
+	    #tempAmberFlashing := #starvedUpstream;
+	    #tempAmberSolid    := #blockedDownstream;
+	    #tempBlueFlashing  := #materialLow;
+	    
+	  "LPMLV2022_STATE_SUSPENDED":
+	    #tempAmberFlashing := #starvedUpstream;
+	    #tempAmberSolid    := #blockedDownstream;
+	    #tempBlueFlashing  := #materialLow;
+	    
+	  "LPMLV2022_STATE_ABORTING":
+	    #tempRedFlashing  := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_ABORTED":
+	    #tempRedFlashing  := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_CLEARING":
+	    #tempRedFlashing  := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_STOPPING":
+	    #tempRedSolid     := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	    
+	  "LPMLV2022_STATE_STOPPED":
+	    #tempRedSolid     := TRUE;
+	    #tempBlueFlashing := #materialLow;
+	
+	  // ELSE 
+	  //   ; // Reset all outputs
+	END_CASE;
+	
+	// Write outputs
+	#Stacklight := 16#0000_0000;
+	
+	#Stacklight.%X0 := #redSolid      := #tempRedSolid;
+	#Stacklight.%X1 := #redFlashing   := #tempRedFlashing;
+	#Stacklight.%X2 := #amberSolid    := #tempAmberSolid;
+	#Stacklight.%X3 := #amberFlashing := #tempAmberFlashing;
+	#Stacklight.%X4 := #blueSolid     := #tempBlueSolid;
+	#Stacklight.%X5 := #blueFlashing  := #tempBlueFlashing;
+	#Stacklight.%X6 := #greenSolid    := #tempGreenSolid;
+	#Stacklight.%X7 := #greenFlashing := #tempGreenFlashing;
+	#Stacklight.%X9 := #hornFlashing  := #tempHornFlashing;
+END_FUNCTION_BLOCK
+

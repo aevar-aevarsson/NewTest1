@@ -1,0 +1,96 @@
+﻿FUNCTION_BLOCK "PACKMLV2022_PackTagsGlueCode"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_TEMP 
+      tempUnitModeCurrent : DInt;   // Current Unit Mode Number (0: Invalid, 1: Production, 2: Maintenance, 3: Manual, 04 - 31: User Definable)
+      tempStateCurrent : DInt;   // Current State Number (0: Undefined, 1: CLEARING, 2: STOPPED, 3: STARTING, 4: IDLE, 5: SUSPENDED, 6: EXECUTE, 7: STOPPING, 8: ABORTING, 9: ABORTED; 10: HOLDING, 11: HELD, 12: UNHOLDING, 13: SUSPENDING, 14: UNSUSPENDING, 15: RESETTING, 16: COMPLETING, 17: COMPLETED)
+      tempReturnValue : Int;   // Return value from RD_LOC_T system function
+      tempPLCDateTimeDTL {InstructionName := 'DTL'; LibVersion := '1.0'} : DTL;   // Current local time from the CPU clock (output from RD_LOC_T system function)
+   END_VAR
+
+
+BEGIN
+	REGION COMMAND_TAGS
+	  "InstLPMLV2022_UnitModeStateManager".UnitMode              := "PACKMLV2022".Command.UnitMode;
+	  "InstLPMLV2022_UnitModeStateManager".UnitModeChangeRequest := "PACKMLV2022".Command.UnitModeChangeRequest;
+	  
+	  "InstLPMLV2022_UnitModeStateManager".CntrlCmd         := "PACKMLV2022".Command.CntrlCmd;
+	  "InstLPMLV2022_UnitModeStateManager".CmdChangeRequest := "PACKMLV2022".Command.CmdChangeRequest;
+	END_REGION
+	
+	#tempUnitModeCurrent := "InstLPMLV2022_UnitModeStateManager".UnitModeCurrent;
+	#tempStateCurrent    := "InstLPMLV2022_UnitModeStateManager".StateCurrent;
+	
+	REGION STATUS_TAGS
+	  "PACKMLV2022".Status.UnitModeCurrent := #tempUnitModeCurrent;
+	  "PACKMLV2022".Status.StateCurrent    := #tempStateCurrent;
+	  
+	  "PACKMLV2022".Status.StateRequested       := "InstLPMLV2022_UnitModeStateManager".StateRequested;
+	  "PACKMLV2022".Status.StateChangeInProcess := "InstLPMLV2022_UnitModeStateManager".StateChangeInProcess;
+	  
+	  // Call of LPMLV2022_Stacklight (OPTIONAL)
+	  "InstLPMLV2022_Stacklight"(StateCurrent := #tempStateCurrent,
+	                             Stacklight => "PACKMLV2022".Status.Stacklight[0]);
+	END_REGION
+	
+	REGION ADMIN_TAGS
+	  // Call of LPMLV2022_UnitModeStateTimes (OPTIONAL)
+	  "InstLPMLV2022_UnitModeStateTimes"(UnitModeCurrent := #tempUnitModeCurrent,
+	                                     StateCurrent := #tempStateCurrent);
+	  
+	  "PACKMLV2022".Admin.ModeTimeCurrent  := "InstLPMLV2022_UnitModeStateTimes".ModeTimeCurrent;
+	  "PACKMLV2022".Admin.StateTimeCurrent := "InstLPMLV2022_UnitModeStateTimes".StateTimeCurrent;
+	  
+	  "PACKMLV2022".Admin.CumulativeTimes[0].AccTimeSinceReset := "InstLPMLV2022_UnitModeStateTimes".AccTimeSinceReset;
+	  
+	  // "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_INVALID"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_INVALID"];
+	  // "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_INVALID"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_INVALID"];
+	  
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_PRODUCTION"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_PRODUCTION"];
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_PRODUCTION"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_PRODUCTION"];
+	  
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_MAINTENANCE"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_MAINTENANCE"];
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_MAINTENANCE"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_MAINTENANCE"];
+	  
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_MANUAL"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_MANUAL"];
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_MANUAL"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_MANUAL"];
+	  
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_USER_01"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_USER_01"];
+	  "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_USER_01"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_USER_01"];
+	  
+	  // "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_USER_02"].Mode  := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllModes["LPMLV2022_MODE_USER_02"];
+	  // "PACKMLV2022".Admin.CumulativeTimes[0].ModeStateTimes["LPMLV2022_MODE_USER_02"].State := "InstLPMLV2022_UnitModeStateTimes".cumulativeTimeAllStatesOfAllModes["LPMLV2022_MODE_USER_02"];
+	  
+	  // "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_INVALID"]     := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_INVALID"];
+	  "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_PRODUCTION"]  := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_PRODUCTION"];
+	  "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_MAINTENANCE"] := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_MAINTENANCE"];
+	  "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_MANUAL"]      := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_MANUAL"];
+	  "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_USER_01"]     := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_USER_01"];
+	  // "PACKMLV2022".Admin.DisabledStatesCfg["LPMLV2022_MODE_USER_02"]     := "InstLPMLV2022_UnitModeStateManager".configuration.DisabledStatesCfg["LPMLV2022_MODE_USER_02"];
+	  
+	  "PACKMLV2022".Admin.CurDisabledStates := "InstLPMLV2022_UnitModeStateManager".CurDisabledStates;
+	  
+	  "PACKMLV2022".Admin.EnabledModesCfg := "InstLPMLV2022_UnitModeStateManager".configuration.EnabledModesCfg;
+	  
+	  // "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_INVALID"]     := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_INVALID"];
+	  "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_PRODUCTION"]  := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_PRODUCTION"];
+	  "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_MAINTENANCE"] := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_MAINTENANCE"];
+	  "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_MANUAL"]      := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_MANUAL"];
+	  "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_USER_01"]     := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_USER_01"];
+	  // "PACKMLV2022".Admin.ModeTransitionCfg["LPMLV2022_MODE_USER_02"]     := "InstLPMLV2022_UnitModeStateManager".configuration.ModeTransitionCfg["LPMLV2022_MODE_USER_02"];
+	  
+	  // PLCDateTime
+	  #tempReturnValue := RD_LOC_T(#tempPLCDateTimeDTL);
+	  
+	  "PACKMLV2022".Admin.PLCDateTime.Year        := UINT_TO_INT(#tempPLCDateTimeDTL.YEAR);
+	  "PACKMLV2022".Admin.PLCDateTime.Month       := #tempPLCDateTimeDTL.MONTH;
+	  "PACKMLV2022".Admin.PLCDateTime.Day         := #tempPLCDateTimeDTL.DAY;
+	  "PACKMLV2022".Admin.PLCDateTime.Hour        := #tempPLCDateTimeDTL.HOUR;
+	  "PACKMLV2022".Admin.PLCDateTime.Minute      := #tempPLCDateTimeDTL.MINUTE;
+	  "PACKMLV2022".Admin.PLCDateTime.Second      := #tempPLCDateTimeDTL.SECOND;
+	  "PACKMLV2022".Admin.PLCDateTime.Millisecond := UDINT_TO_INT(#tempPLCDateTimeDTL.NANOSECOND / 1000000);
+	  
+	  "PACKMLV2022".Admin.PLCDateTimeDTL := #tempPLCDateTimeDTL;
+	END_REGION
+END_FUNCTION_BLOCK
+
